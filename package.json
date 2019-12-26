@@ -1,0 +1,14 @@
+{
+  "name": "@a-js/server",
+  "version": "0.1.0",
+  "description": "The easiest to use Node.js backend framework",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "TripleA Development",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
