@@ -1,15 +1,19 @@
-interface AJSServerFeature {
-    feature: Object;
-    options: Object;
-}
+/// <reference types="node" />
+import { AJSServerFeature } from './ajsServerFeature';
 interface AJSServerDatabaseConfig {
-    url: String;
+    url: string;
 }
 interface AJSServerConfig {
     database: AJSServerDatabaseConfig;
-    features: [AJSServerFeature];
+    features: [{
+        feature: AJSServerFeature;
+        config: object;
+    }];
 }
-declare class AJSServer {
+export declare class App {
+    private expressInstance;
+    private features;
     constructor(config: AJSServerConfig);
+    listen(port: Number): Promise<import("http").Server>;
 }
-export default AJSServer;
+export {};

@@ -1,23 +1,56 @@
-interface AJSServerFeature {
-  feature: Object
-  options: Object
-}
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import { AJSServerFeature } from './ajsServerFeature';
 
 interface AJSServerDatabaseConfig {
-  url: String
+  url: string
 }
 
 interface AJSServerConfig {
   database: AJSServerDatabaseConfig
   features: [
-    AJSServerFeature
+    {
+      feature: AJSServerFeature,
+      config: object
+    }
   ]
 }
 
-class AJSServer {
+export class App {
+  private expressInstance : express.Application;
+  private features : AJSServerFeature[];
+
   constructor(config : AJSServerConfig) {
-    console.log(config)
+    this.expressInstance = express();
+    this.expressInstance.use(bodyParser.json());
+    this.expressInstance.use(bodyParser.urlencoded({ extended: true }));
+    this.expressInstance.use(cors());
+
+    this.features = [];
+
+    for (const feature of config.features) {
+      this.features.push(new feature.feature(feature.config))
+    };
+
+    for (const feature of this.features) {
+      const featureRouter = express.Router();
+
+      for (const route of feature.featureInfo.routeList) {
+        if (route.method === 'GET') {
+          featureRouter.get(route.path, route.handler)
+        } else if (route.method === 'POST') {
+          featureRouter.get(route.path, route.handler);
+        } else {
+          throw new Error(`Invalid request method '${route.method}'`);
+        }
+      }
+
+      this.expressInstance.use(feature.featureInfo.basePath, featureRouter);
+    }
+  }
+
+  async listen(port : Number) {
+    return await this.expressInstance.listen(port)
   }
 }
-
-export default AJSServer;

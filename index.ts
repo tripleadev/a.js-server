@@ -1,5 +1,2 @@
-import AJSServer from './src/ajsServer';
-
-export default {
-  App: AJSServer
-};
+export * from './src/ajsServer';
+export * from './src/ajsServerFeature';
