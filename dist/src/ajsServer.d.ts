@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { AJSServerFeature } from './ajsServerFeature';
 interface AJSServerDatabaseConfig {
     url: string;
@@ -14,6 +13,6 @@ export declare class App {
     private expressInstance;
     private features;
     constructor(config: AJSServerConfig);
-    listen(port: Number): Promise<import("http").Server>;
+    listen(givenPort: Number): Promise<string | Number>;
 }
 export {};

@@ -10,4 +10,4 @@ const app = new ajsServer.App({
   }]
 });
 
-app.listen(3000).then(() => console.log('Listening on port 3000'));
+app.listen(3000).then((port) => console.log(`Listening on port ${port}`));

@@ -72,12 +72,17 @@ var App = /** @class */ (function () {
             this.expressInstance.use(feature.featureInfo.basePath, featureRouter);
         }
     }
-    App.prototype.listen = function (port) {
+    App.prototype.listen = function (givenPort) {
         return __awaiter(this, void 0, void 0, function () {
+            var port;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.expressInstance.listen(port)];
-                    case 1: return [2 /*return*/, _a.sent()];
+                    case 0:
+                        port = process.env.PORT || givenPort;
+                        return [4 /*yield*/, this.expressInstance.listen(port)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, port];
                 }
             });
         });

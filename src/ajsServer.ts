@@ -50,7 +50,9 @@ export class App {
     }
   }
 
-  async listen(port : Number) {
-    return await this.expressInstance.listen(port)
+  async listen(givenPort : Number) {
+    const port = process.env.PORT || givenPort;
+    await this.expressInstance.listen(port);
+    return port;
   }
 }
